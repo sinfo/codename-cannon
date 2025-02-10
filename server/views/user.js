@@ -19,14 +19,14 @@ function renderObject (model, user, editionId, expand = false) {
   result.points = model.points !== undefined && typeof model.points === 'number'
     ? model.points : undefined
   result.registered = model.registered
-  result.signatures = model.signatures && model.signatures.map(signature => ({
-    edition: signature && signature.edition,
-    day: signature && signature.day,
-    redeemed: signature && signature.redeemed,
-    signatures: signature && signature.signatures
-  }))
 
   if (expand) {
+    result.signatures = model.signatures && model.signatures.map(signature => ({
+      edition: signature && signature.edition,
+      day: signature && signature.day,
+      redeemed: signature && signature.redeemed,
+      signatures: signature && signature.signatures
+    }))
     result.title = model.title
     result.nationality = model.nationality
     result.skills = model.skills
@@ -34,7 +34,14 @@ function renderObject (model, user, editionId, expand = false) {
     result.lookingFor = model.lookingFor
     result.academicInformation = model.academicInformation
     result.contacts = model.contacts
+
+    if (user && model.id === user.id) {
+      if (editionId) {
+        result.connections = model.connections[editionId]
+      }
+    }
   }
+
 
   if (isAdmin || isTeam) {
     result.mail = model.mail

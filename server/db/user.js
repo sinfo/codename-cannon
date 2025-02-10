@@ -50,6 +50,7 @@ const schema = new mongoose.Schema({
   },
   // Profile information
   title: String,
+  nationality: String,
   skills: [String],
   interestedIn: [String],
   lookingFor: [String],
